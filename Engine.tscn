@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Engine.gd" type="Script" id=1]
+[ext_resource path="res://assets/rocket.ogg" type="AudioStream" id=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.6, 0.992593 )
+colors = PoolColorArray( 1, 0.356863, 0.156863, 1, 0.926415, 0.906457, 0.427019, 1, 0.85098, 0.670588, 0.0431373, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 1
+emission_sphere_radius = 3.0
+flag_disable_z = true
+spread = 16.03
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 126.44
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = -78.16
+radial_accel = 0.38
+radial_accel_random = 1.0
+tangential_accel = 0.89
+tangential_accel_random = 0.32
+damping = 100.0
+damping_random = 0.61
+angle = 36.0
+scale = 5.0
+scale_random = 1.0
+color_ramp = SubResource( 2 )
+
+[node name="Engine" type="Particles2D"]
+emitting = false
+amount = 71
+process_material = SubResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="StopTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="RocketSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+[connection signal="timeout" from="StopTimer" to="." method="_on_StopTimer_timeout"]

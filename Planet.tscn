@@ -1,0 +1,43 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/moon4.png" type="Texture" id=1]
+[ext_resource path="res://Planet.gd" type="Script" id=2]
+[ext_resource path="res://Explosion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/moon3.png" type="Texture" id=4]
+[ext_resource path="res://assets/moon5.png" type="Texture" id=5]
+[ext_resource path="res://assets/moon7.png" type="Texture" id=6]
+[ext_resource path="res://assets/moon1.png" type="Texture" id=7]
+[ext_resource path="res://assets/moon6.png" type="Texture" id=8]
+[ext_resource path="res://assets/moon2.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="Planet" type="Area2D" groups=[
+"planets",
+]]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 5, 5.08 )
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[node name="Explosion" parent="." instance=ExtResource( 3 )]
+scale = Vector2( 2.63262, 2.63262 )
+frame = 1
+[connection signal="body_entered" from="." to="." method="_on_Planet_body_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]
+[connection signal="exploded" from="Explosion" to="." method="_on_Explosion_exploded"]
